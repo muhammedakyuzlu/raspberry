@@ -1,0 +1,16 @@
+# # top left 
+# TLMotor = Motor(22,17,27)
+# # top right
+# TRMotor = Motor(14,15,18)
+# # buttom left
+# BLMotor = Motor(26,13,19)
+# # buttom right
+# BRMotor = Motor(16,20,21)
+ 
+# MOTORS: ENA IN1 IN2 :top left  top right buttom left  buttom right
+motor = Motors(22,17,27,14,15,18,26,13,19,16,20,21) 
+
+
+# set GPIO Pins
+pinTrigger = 23
+pinEcho = 24
