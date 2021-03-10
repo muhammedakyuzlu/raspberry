@@ -43,3 +43,4 @@ while True:
 	print ("Distance: %.1f cm" % distance)
 	time.sleep(1)
 # signal.signal(signal.SIGINT, close)
+# import signal

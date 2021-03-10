@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-import signal
 import sys
 
 # use Raspberry Pi board pin numbers
