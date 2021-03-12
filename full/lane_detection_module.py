@@ -6,8 +6,8 @@ import utlis
 curveList = []
 avgVal=10
  
-intialTrackBarVals = [102, 80, 20, 214 ]
-utlis.initializeTrackbars(intialTrackBarVals)
+# intialTrackBarVals = [102, 80, 20, 214 ]
+# utlis.initializeTrackbars(intialTrackBarVals)
 
 def getLaneCurve(img,display=2):
  
@@ -18,7 +18,9 @@ def getLaneCurve(img,display=2):
  
     #### STEP 2
     hT, wT, c = img.shape
-    points = utlis.valTrackbars()
+    points = [[128,147],[352,147],[49,240],[431,240]]
+    # utlis.valTrackbars()
+    # print(points)
     imgWarp = utlis.warpImg(imgThres,points,wT,hT)
     imgWarpPoints = utlis.drawPoints(imgCopy,points)
  
@@ -72,8 +74,8 @@ def getLaneCurve(img,display=2):
 if __name__ == '__main__':
     #cap = cv2.VideoCapture('vid1.mp4')
     cap = cv2.VideoCapture(1)
-    intialTrackBarVals = [102, 80, 20, 214 ]
-    utlis.initializeTrackbars(intialTrackBarVals)
+    # intialTrackBarVals = [102, 80, 20, 214 ]
+    # utlis.initializeTrackbars(intialTrackBarVals)
     frameCounter = 0
     while True:
         frameCounter += 1
