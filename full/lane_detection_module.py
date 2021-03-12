@@ -1,10 +1,14 @@
 import cv2
 import numpy as np
 import utlis
- 
+
+
 curveList = []
 avgVal=10
  
+intialTrackBarVals = [102, 80, 20, 214 ]
+utlis.initializeTrackbars(intialTrackBarVals)
+
 def getLaneCurve(img,display=2):
  
     imgCopy = img.copy()
@@ -52,20 +56,22 @@ def getLaneCurve(img,display=2):
         imgStacked = utlis.stackImages(0.7, ([img, imgWarpPoints, imgWarp],
                                              [imgHist, imgLaneColor, imgResult]))
         cv2.imshow('ImageStack', imgStacked)
+        cv2.waitKey(1)
     elif display == 1:
         cv2.imshow('Resutlt', imgResult)
+        cv2.waitKey(1)
  
     #### NORMALIZATION
     curve = curve/100
     if curve>1: curve ==1
     if curve<-1:curve == -1
- 
+
     return curve
  
  
 if __name__ == '__main__':
     #cap = cv2.VideoCapture('vid1.mp4')
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     intialTrackBarVals = [102, 80, 20, 214 ]
     utlis.initializeTrackbars(intialTrackBarVals)
     frameCounter = 0
