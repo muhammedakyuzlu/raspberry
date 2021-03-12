@@ -11,7 +11,6 @@ def main():
     distance = sensor.distance()
     print ("Distance: %.1f cm" % distance)
 
-    
 
 
 if __name__ == '__main__':
@@ -26,7 +25,5 @@ if __name__ == '__main__':
 
     for i in range(5):
         main()
-    sensor.close()    
+    sensor.close()
 
-        
-   
