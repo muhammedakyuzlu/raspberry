@@ -45,7 +45,12 @@ class Motor():
 
 class Motors():
 
-    def __init__(self,TLEna,TLIn1,TLIn2,TREna,TRIn1,TRIn2,BLEna,BLIn1,BLIn2,BREna,BRIn1,BRIn2):
+    def __init__(self,\
+                    TLEna,TLIn1,TLIn2,\
+                    TREna,TRIn1,TRIn2,\
+                    BLEna,BLIn1,BLIn2,\
+                    BREna,BRIn1,BRIn2):
+                    
         # ENA speed  IN1,2 direction pwm frequency
         
         self.TLMotor = Motor(TLEna,TLIn1,TLIn2)
