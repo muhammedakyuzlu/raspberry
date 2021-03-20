@@ -1,18 +1,22 @@
 from motor_module import Motors 
-import lane_detection_module
-from sensor import Sensor
-import lane_detection_module
-import camera
+#import lane_detection_module
+#from sensor import Sensor
+#import lane_detection_module
+#import camera
 import sys
 
 #CAMERA_PORT = 0
 
 def main():
-    motor.move(0.6,0,2)
-    motor.stop(2)
-    motor.move(-0.5,0.2,2)
-    motor.stop(2)
+    # motor.move(0.5,0,1)
+    # motor.stop(1)
+    
+    #motor.move(-1,-0.5,0.2)
+    #motor.move(1,-0.5,0.2)
+    # motor.stop(1)
 
+    # motor.move(1,0.5,0.1)
+    #motor.stop(3)
 
 if __name__ == '__main__':
 

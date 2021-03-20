@@ -36,7 +36,7 @@ class Motor():
 
     def stop(self):
         self.pwm.ChangeDutyCycle(0)
-        GPIO.cleanup()
+        #GPIO.cleanup()
 
  
 
@@ -57,16 +57,17 @@ class Motors():
         
     def move(self,speed=0.5,turn=0,t=0):
 
-        if   speed > 1 : speed = 1
-        elif speed < 0 : speed = 0
+        if   speed > 1  : speed = 1
+        elif speed < -1 : speed = -1
         speed *=100
 
         if   turn > 1 : turn = 1
-        elif turn < 0 : turn = 0
+        elif turn < -1 : turn = -1
         turn *= 100
 
         leftMotorsSpeed  =  speed - turn
         rightMotorsSpeed =  speed + turn 
+
 
         if leftMotorsSpeed>100: leftMotorsSpeed=100
         elif leftMotorsSpeed<-100: leftMotorsSpeed= -100
@@ -74,25 +75,67 @@ class Motors():
         if rightMotorsSpeed>100: rightMotorsSpeed=100
         elif rightMotorsSpeed<-100: rightMotorsSpeed= -100
         
+        print('leftMotorsSpeed',leftMotorsSpeed)
+        print('rightMotorsSpeed',rightMotorsSpeed)
+        
+        # # forward
+        # if speed > 0 :
 
+        #     if  leftMotorsSpeed > rightMotorsSpeed :
+        #         self.TLMotor.moveF(abs(int(leftMotorsSpeed)))
+        #         self.BLMotor.moveF(abs(int(leftMotorsSpeed)))
+        #         self.TRMotor.moveB(abs(int(leftMotorsSpeed)))
+        #         self.BRMotor.moveB(abs(int(leftMotorsSpeed)))
+
+        #     elif leftMotorsSpeed < rightMotorsSpeed :
+        #         self.TLMotor.moveB(abs(int(leftMotorsSpeed)))
+        #         self.BLMotor.moveB(abs(int(leftMotorsSpeed)))
+        #         self.TRMotor.moveF(abs(int(leftMotorsSpeed)))
+        #         self.BRMotor.moveF(abs(int(leftMotorsSpeed)))
+        #     else :
+        #         self.TLMotor.moveF(abs(int(speed)))
+        #         self.BLMotor.moveF(abs(int(speed)))
+        #         self.TRMotor.moveF(abs(int(speed)))
+        #         self.BRMotor.moveF(abs(int(speed)))
+        
         # forward
         if speed > 0 :
 
-            if  leftMotorsSpeed > 0 :
-                 self.TLMotor.moveF(abs(int(leftMotorsSpeed)))
-                 self.BLMotor.moveF(abs(int(leftMotorsSpeed)))
+            if  leftMotorsSpeed < rightMotorsSpeed :
+                self.TLMotor.moveF(speed)
+                self.BLMotor.moveF(speed)
+                self.TRMotor.moveB(speed)
+                self.BRMotor.moveB(speed)
+
+            elif leftMotorsSpeed > rightMotorsSpeed :
+                self.TLMotor.moveB(speed)
+                self.BLMotor.moveB(speed)
+                self.TRMotor.moveF(speed)
+                self.BRMotor.moveF(speed)
             else :
-                self.TLMotor.moveB(abs(int(leftMotorsSpeed)))
-                self.BLMotor.moveB(abs(int(leftMotorsSpeed)))
+                self.TLMotor.moveF(speed)
+                self.BLMotor.moveF(speed)
+                self.TRMotor.moveF(speed)
+                self.BRMotor.moveF(speed)
 
+        if speed < 0 :
 
-            if  rightMotorsSpeed > 0 :
-                 self.TRMotor.moveF(abs(int(leftMotorsSpeed)))
-                 self.BRMotor.moveF(abs(int(leftMotorsSpeed)))
+            if  leftMotorsSpeed > rightMotorsSpeed :
+                self.TLMotor.moveF(abs(speed))
+                self.BLMotor.moveF(abs(speed))
+                self.TRMotor.moveB(abs(speed))
+                self.BRMotor.moveB(abs(speed))
+
+            elif leftMotorsSpeed < rightMotorsSpeed :
+                self.TLMotor.moveB(abs(speed))
+                self.BLMotor.moveB(abs(speed))
+                self.TRMotor.moveF(abs(speed))
+                self.BRMotor.moveF(abs(speed))
             else :
-                self.TRMotor.moveB(abs(int(leftMotorsSpeed)))
-                self.BRMotor.moveB(abs(int(leftMotorsSpeed)))
-
+                self.TLMotor.moveB(abs(speed))
+                self.BLMotor.moveB(abs(speed))
+                self.TRMotor.moveB(abs(speed))
+                self.BRMotor.moveB(abs(speed))
         sleep(t)
 
 
