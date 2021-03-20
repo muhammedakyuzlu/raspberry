@@ -17,7 +17,6 @@ def getImg(display= False,size=[480,240]):
 
 
 if __name__ == '__main__':
-    cap = cv2.VideoCapture(0)
     while True:
         img = getImg(True)
         cv2.waitKey(1)

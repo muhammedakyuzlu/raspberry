@@ -5,7 +5,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
  
 class Motor():
-
     def __init__(self,Ena,In1,In2):
         # speed
         self.Ena = Ena
@@ -41,8 +40,6 @@ class Motor():
 
  
 
-
-
 class Motors():
 
     def __init__(self,\
@@ -52,7 +49,6 @@ class Motors():
                     BREna,BRIn1,BRIn2):
                     
         # ENA speed  IN1,2 direction pwm frequency
-        
         self.TLMotor = Motor(TLEna,TLIn1,TLIn2)
         self.TRMotor = Motor(TREna,TRIn1,TRIn2)
         self.BLMotor = Motor(BLEna,BLIn1,BLIn2)
@@ -60,59 +56,88 @@ class Motors():
         
         
     def move(self,speed=0.5,turn=0,t=0):
+
+        if   speed > 1 : speed = 1
+        elif speed < 0 : speed = 0
         speed *=100
-        # turn *=90
-        # left =  speed - turn
-        # right = speed + turn 
 
-        # if left>100: left=100
-        # elif left<-100: left= -100
-        # if right>100: right=100
-        # elif right<-100: right= -100
+        if   turn > 1 : turn = 1
+        elif turn < 0 : turn = 0
+        turn *= 100
+
+        leftMotorsSpeed  =  speed - turn
+        rightMotorsSpeed =  speed + turn 
+
+        if leftMotorsSpeed>100: leftMotorsSpeed=100
+        elif leftMotorsSpeed<-100: leftMotorsSpeed= -100
+
+        if rightMotorsSpeed>100: rightMotorsSpeed=100
+        elif rightMotorsSpeed<-100: rightMotorsSpeed= -100
         
+
+        # forward
         if speed > 0 :
-            #forward right
-            if turn > 0 :
-                self.TLMotor.moveF(speed)
-                self.BRMotor.moveB(speed)
-                self.BLMotor.moveF(speed)
-                self.TRMotor.moveB(speed)
-                
-                #self.TRMotor.moveB(abs(speed))
-                #self.BLMotor.moveB(abs(speed))
-            #forward left
-            elif turn <0 :
-                self.TLMotor.moveB(speed)
-                self.TRMotor.moveF(speed)
-                self.BRMotor.moveF(speed)
-                self.BLMotor.moveB(speed)
-               
-            #forware streat 
+
+            if  leftMotorsSpeed > 0 :
+                 self.TLMotor.moveF(abs(int(leftMotorsSpeed)))
+                 self.BLMotor.moveF(abs(int(leftMotorsSpeed)))
             else :
-                self.TLMotor.moveF(speed)
-                self.TRMotor.moveF(speed)
-                self.BLMotor.moveF(speed)
-                self.BRMotor.moveF(speed)
+                self.TLMotor.moveB(abs(int(leftMotorsSpeed)))
+                self.BLMotor.moveB(abs(int(leftMotorsSpeed)))
 
 
-        else :
-            #backward right
-            if turn > 0 :
-                self.TLMotor.moveB(abs(speed))
-                self.BRMotor.moveB(abs(speed))
-            
-            #backward left
-            elif turn <0 :
-                self.TRMotor.moveB(abs(speed))
-                self.BLMotor.moveB(abs(speed))
-            
-            #backward streat 
+            if  rightMotorsSpeed > 0 :
+                 self.TRMotor.moveF(abs(int(leftMotorsSpeed)))
+                 self.BRMotor.moveF(abs(int(leftMotorsSpeed)))
             else :
-                self.TLMotor.moveB(abs(speed))
-                self.TRMotor.moveB(abs(speed))
-                self.BLMotor.moveB(abs(speed))
-                self.BRMotor.moveB(abs(speed))
+                self.TRMotor.moveB(abs(int(leftMotorsSpeed)))
+                self.BRMotor.moveB(abs(int(leftMotorsSpeed)))
+
         sleep(t)
+
+
+        # #forward right
+        # if turn > 0 :
+        #     self.TLMotor.moveF(speed)
+        #     self.BRMotor.moveB(speed)
+        #     self.BLMotor.moveF(speed)
+        #     self.TRMotor.moveB(speed)
+            
+        #     #self.TRMotor.moveB(abs(speed))
+        #     #self.BLMotor.moveB(abs(speed))
+        # #forward left
+        # elif turn <0 :
+        #     self.TLMotor.moveB(speed)
+        #     self.TRMotor.moveF(speed)
+        #     self.BRMotor.moveF(speed)
+        #     self.BLMotor.moveB(speed)
+            
+        # #forware streat 
+        # else :
+        #     self.TLMotor.moveF(speed)
+        #     self.TRMotor.moveF(speed)
+        #     self.BLMotor.moveF(speed)
+        #     self.BRMotor.moveF(speed)
+
+        # backward
+        # else :
+        #     #backward right
+        #     if turn > 0 :
+        #         self.TLMotor.moveB(abs(speed))
+        #         self.BRMotor.moveB(abs(speed))
+            
+        #     #backward left
+        #     elif turn <0 :
+        #         self.TRMotor.moveB(abs(speed))
+        #         self.BLMotor.moveB(abs(speed))
+            
+        #     #backward streat 
+        #     else :
+        #         self.TLMotor.moveB(abs(speed))
+        #         self.TRMotor.moveB(abs(speed))
+        #         self.BLMotor.moveB(abs(speed))
+        #         self.BRMotor.moveB(abs(speed))
+        # sleep(t)
     def stop(self,t=0):
         self.TLMotor.stop()
         self.TRMotor.stop()

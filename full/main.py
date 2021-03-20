@@ -19,9 +19,9 @@ def main():
     # get image
     img = camera.getImg()
 
-    # if image got lost break
+    # if image got lost 
     if img is None :
-            break
+        raise Exception("image got lost")
 
     # get curve from image by detecting the lane lines
     curve = lane_detection_module.getLaneCurve(img,display=0)

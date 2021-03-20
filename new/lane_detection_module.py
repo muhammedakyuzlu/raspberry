@@ -6,36 +6,41 @@ import utlis
 curveList = []
 avgVal=10
  
-def getLaneCurve(img,display=0):
+# intialTrackBarVals = [102, 80, 20, 214 ]
+# utlis.initializeTrackbars(intialTrackBarVals)
+
+def getLaneCurve(img,display=2):
  
     imgCopy = img.copy()
     imgResult = img.copy()
     
-    #### mask the image and get the white A4 paper 
+    
+    
+    
+    
+    #### STEP 1
     imgThres = utlis.thresholding(img)
  
-    #### Wrap the image to get Bird's-eye view
+    #### STEP 2
     hT, wT, c = img.shape
     points = [[128,147],[352,147],[49,240],[431,240]]
+    # utlis.valTrackbars()
+    # print(points)
     imgWarp = utlis.warpImg(imgThres,points,wT,hT)
-    
-    # draw the points
-    if display != 0 :
-        imgWarpPoints = utlis.drawPoints(imgCopy,points)
+    imgWarpPoints = utlis.drawPoints(imgCopy,points)
  
-
-    #### get the middle point to calculate the curve
+    #### STEP 3
     middlePoint,imgHist = utlis.getHistogram(imgWarp,display=True,minPer=0.5,region=4)
     curveAveragePoint, imgHist = utlis.getHistogram(imgWarp, display=True, minPer=0.9)
     curveRaw = curveAveragePoint - middlePoint
  
-    # average the last'10' curve
+    #### SETP 4
     curveList.append(curveRaw)
     if len(curveList)>avgVal:
         curveList.pop(0)
     curve = int(sum(curveList)/len(curveList))
  
-    # displays
+    #### STEP 5
     if display != 0:
         imgInvWarp = utlis.warpImg(imgWarp, points, wT, hT, inv=True)
         imgInvWarp = cv2.cvtColor(imgInvWarp, cv2.COLOR_GRAY2BGR)
@@ -52,8 +57,8 @@ def getLaneCurve(img,display=0):
             w = wT // 20
             cv2.line(imgResult, (w * x + int(curve // 50), midY - 10),
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
-        fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
-        cv2.putText(imgResult, 'FPS ' + str(int(fps)), (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (230, 50, 50), 3)
+        #fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
+        #cv2.putText(imgResult, 'FPS ' + str(int(fps)), (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (230, 50, 50), 3);
     if display == 2:
         imgStacked = utlis.stackImages(0.7, ([img, imgWarpPoints, imgWarp],
                                              [imgHist, imgLaneColor, imgResult]))
@@ -63,7 +68,7 @@ def getLaneCurve(img,display=0):
         cv2.imshow('Resutlt', imgResult)
         cv2.waitKey(1)
  
-    # NORMALIZATION
+    #### NORMALIZATION
     curve = curve/100
     if curve>1: curve ==1
     if curve<-1:curve == -1
@@ -72,11 +77,20 @@ def getLaneCurve(img,display=0):
  
  
 if __name__ == '__main__':
-    cap = cv2.VideoCapture(0)
+    #cap = cv2.VideoCapture('vid1.mp4')
+    cap = cv2.VideoCapture(1)
+    # intialTrackBarVals = [102, 80, 20, 214 ]
+    # utlis.initializeTrackbars(intialTrackBarVals)
     frameCounter = 0
     while True:
-        _, img = cap.read()
+        frameCounter += 1
+        if cap.get(cv2.CAP_PROP_FRAME_COUNT) == frameCounter:
+            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            frameCounter = 0
+ 
+        success, img = cap.read()
         img = cv2.resize(img,(480,240))
         curve = getLaneCurve(img,display=2)
         print(curve)
+        #cv2.imshow('Vid',img)
         cv2.waitKey(1)
