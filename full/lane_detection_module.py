@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import utlis
-
+import time
 
 curveList = []
 avgVal=10
@@ -52,8 +52,8 @@ def getLaneCurve(img,display=0):
             w = wT // 20
             cv2.line(imgResult, (w * x + int(curve // 50), midY - 10),
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
-        fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
-        cv2.putText(imgResult, 'FPS ' + str(int(fps)), (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (230, 50, 50), 3)
+        # fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
+        # cv2.putText(imgResult, 'FPS ' + str(int(fps)), (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (230, 50, 50), 3)
     if display == 2:
         imgStacked = utlis.stackImages(0.7, ([img, imgWarpPoints, imgWarp],
                                              [imgHist, imgLaneColor, imgResult]))

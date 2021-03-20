@@ -33,12 +33,14 @@ class Motor():
         GPIO.output(self.In2,GPIO.HIGH)
   
 
+    def __del__(self):
+        GPIO.cleanup()
 
     def stop(self):
         self.pwm.ChangeDutyCycle(0)
         #GPIO.cleanup()
 
- 
+
 
 class Motors():
 
@@ -75,8 +77,8 @@ class Motors():
         if rightMotorsSpeed>100: rightMotorsSpeed=100
         elif rightMotorsSpeed<-100: rightMotorsSpeed= -100
         
-        print('leftMotorsSpeed',leftMotorsSpeed)
-        print('rightMotorsSpeed',rightMotorsSpeed)
+        # print('leftMotorsSpeed',leftMotorsSpeed)
+        # print('rightMotorsSpeed',rightMotorsSpeed)
         
         # # forward
         # if speed > 0 :
@@ -112,11 +114,11 @@ class Motors():
                 self.BLMotor.moveB(speed)
                 self.TRMotor.moveF(speed)
                 self.BRMotor.moveF(speed)
-            else :
-                self.TLMotor.moveF(speed)
-                self.BLMotor.moveF(speed)
-                self.TRMotor.moveF(speed)
-                self.BRMotor.moveF(speed)
+            # #else :
+            # self.TLMotor.moveF(speed)
+            # self.BLMotor.moveF(speed)
+            # self.TRMotor.moveF(speed)
+            # self.BRMotor.moveF(speed)
 
         if speed < 0 :
 
@@ -181,9 +183,21 @@ class Motors():
         #         self.BLMotor.moveB(abs(speed))
         #         self.BRMotor.moveB(abs(speed))
         # sleep(t)
+    
+    
+    def forward(self,speed,t):
+        speed *=100    
+        self.TLMotor.moveF(speed)
+        self.BLMotor.moveF(speed)
+        self.TRMotor.moveF(speed)
+        self.BRMotor.moveF(speed)
+        sleep(t)
+    
     def stop(self,t=0):
         self.TLMotor.stop()
         self.TRMotor.stop()
         self.BLMotor.stop()
         self.BRMotor.stop()
-        sleep(t)
+        sleep(t)   
+    def clean(self):
+        GPIO.cleanup()    

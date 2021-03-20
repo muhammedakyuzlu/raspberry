@@ -4,7 +4,7 @@ import sys
 
 # use Raspberry Pi board pin numbers
 GPIO.setmode(GPIO.BCM)
-
+GPIO.setwarnings(False)
 
 class Sensor():
 
@@ -58,8 +58,8 @@ class Sensor():
 
 if __name__ == '__main__':	
 	while True:
-		dis = Sensor(23,24)
-		dis.distance()
+		dis = Sensor(23,4)
+		print(dis.distance())
 		dis.close()
 		time.sleep(2)
         
