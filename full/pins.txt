@@ -14,3 +14,10 @@ motor = Motors(22,17,27,14,15,18,26,13,19,16,20,21)
 # set GPIO Pins
 pinTrigger = 23
 pinEcho = 4
+
+#cd /dev
+sudo chmod og+rwx /dev/gpio*
+sudo   crontab -e
+
+@reboot python3 path.py
+
