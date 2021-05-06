@@ -71,11 +71,11 @@ class Motors():
         rightMotorsSpeed =  speed + turn 
 
 
-        if leftMotorsSpeed>100: leftMotorsSpeed=100
-        elif leftMotorsSpeed<-100: leftMotorsSpeed= -100
+        # if leftMotorsSpeed>100: leftMotorsSpeed=100
+        # elif leftMotorsSpeed<-100: leftMotorsSpeed= -100
 
-        if rightMotorsSpeed>100: rightMotorsSpeed=100
-        elif rightMotorsSpeed<-100: rightMotorsSpeed= -100
+        # if rightMotorsSpeed>100: rightMotorsSpeed=100
+        # elif rightMotorsSpeed<-100: rightMotorsSpeed= -100
         
         # print('leftMotorsSpeed',leftMotorsSpeed)
         # print('rightMotorsSpeed',rightMotorsSpeed)
@@ -103,44 +103,41 @@ class Motors():
         # forward
         if speed > 0 :
 
-            if  leftMotorsSpeed < rightMotorsSpeed :
+            if  turn<0 :
                 self.TLMotor.moveF(speed)
                 self.BLMotor.moveF(speed)
                 self.TRMotor.moveB(speed)
                 self.BRMotor.moveB(speed)
 
-            elif leftMotorsSpeed > rightMotorsSpeed :
+            elif turn > 0 :
                 self.TLMotor.moveB(speed)
                 self.BLMotor.moveB(speed)
                 self.TRMotor.moveF(speed)
                 self.BRMotor.moveF(speed)
-            # #else :
-            # self.TLMotor.moveF(speed)
-            # self.BLMotor.moveF(speed)
-            # self.TRMotor.moveF(speed)
-            # self.BRMotor.moveF(speed)
+        sleep(t)        
+        self.TLMotor.moveF(speed)
+        self.BLMotor.moveF(speed)
+        self.TRMotor.moveF(speed)
+        self.BRMotor.moveF(speed)
+        sleep(0.01)
 
-        if speed < 0 :
+        # if speed < 0 :
+        #     if  leftMotorsSpeed > rightMotorsSpeed :
+        #         self.TLMotor.moveF(abs(speed))
+        #         self.BLMotor.moveF(abs(speed))
+        #         self.TRMotor.moveB(abs(speed))
+        #         self.BRMotor.moveB(abs(speed))
 
-            if  leftMotorsSpeed > rightMotorsSpeed :
-                self.TLMotor.moveF(abs(speed))
-                self.BLMotor.moveF(abs(speed))
-                self.TRMotor.moveB(abs(speed))
-                self.BRMotor.moveB(abs(speed))
-
-            elif leftMotorsSpeed < rightMotorsSpeed :
-                self.TLMotor.moveB(abs(speed))
-                self.BLMotor.moveB(abs(speed))
-                self.TRMotor.moveF(abs(speed))
-                self.BRMotor.moveF(abs(speed))
-            else :
-                self.TLMotor.moveB(abs(speed))
-                self.BLMotor.moveB(abs(speed))
-                self.TRMotor.moveB(abs(speed))
-                self.BRMotor.moveB(abs(speed))
-        sleep(t)
-
-
+        #     elif leftMotorsSpeed < rightMotorsSpeed :
+        #         self.TLMotor.moveB(abs(speed))
+        #         self.BLMotor.moveB(abs(speed))
+        #         self.TRMotor.moveF(abs(speed))
+        #         self.BRMotor.moveF(abs(speed))
+        #     else :
+        #         self.TLMotor.moveB(abs(speed))
+        #         self.BLMotor.moveB(abs(speed))
+        #         self.TRMotor.moveB(abs(speed))
+        #         self.BRMotor.moveB(abs(speed))
         # #forward right
         # if turn > 0 :
         #     self.TLMotor.moveF(speed)
@@ -185,13 +182,13 @@ class Motors():
         # sleep(t)
     
     
-    def forward(self,speed,t):
-        speed *=100    
-        self.TLMotor.moveF(speed)
-        self.BLMotor.moveF(speed)
-        self.TRMotor.moveF(speed)
-        self.BRMotor.moveF(speed)
-        sleep(t)
+    # def forward(self,speed,t):
+    #     speed *=100    
+    #     self.TLMotor.moveF(speed)
+    #     self.BLMotor.moveF(speed)
+    #     self.TRMotor.moveF(speed)
+    #     self.BRMotor.moveF(speed)
+    #     sleep(t)
     
     def stop(self,t=0):
         self.TLMotor.stop()

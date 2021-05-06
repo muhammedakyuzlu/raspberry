@@ -25,7 +25,7 @@ def getLaneCurve(img,display=0):
  
 
     #### get the middle point to calculate the curve
-    middlePoint,imgHist = utlis.getHistogram(imgWarp,display=True,minPer=0.5,region=4)
+    middlePoint,imgHist = utlis.getHistogram(imgWarp,display=True,minPer=0.8,region=4)
     curveAveragePoint, imgHist = utlis.getHistogram(imgWarp, display=True, minPer=0.9)
     curveRaw = curveAveragePoint - middlePoint
  

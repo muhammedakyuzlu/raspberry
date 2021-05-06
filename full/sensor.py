@@ -14,6 +14,7 @@ class Sensor():
 		# set GPIO input and output channels
 		GPIO.setup(self.pinTrigger, GPIO.OUT)
 		GPIO.setup(self.pinEcho, GPIO.IN)
+		print("sensor is init")
 
 
 	def distance(self):
