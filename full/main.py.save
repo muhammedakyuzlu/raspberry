@@ -11,7 +11,6 @@ import RPi.GPIO as GPIO
 from time import sleep
 import new_lane_line
 import cv2
-import asyncio
 
 
 GPIO.setmode(GPIO.BCM)
@@ -30,8 +29,8 @@ sensor = Sensor(pinTrigger=23,pinEcho=4)
 def go():
     # MOTORS: ENA IN1 IN2 :top left  top right buttom left  buttom right
     motor = Motors(22,17,27,5,6,12,26,13,19,16,20,21)
-    a=0
-    while True:
+    
+	while True:
         # get image
         img = camera.GetImg().getImg()
         # if image got lost 
@@ -48,20 +47,23 @@ def go():
         #     turn =0      
         # motor.move(speed=1,turn=0,t=3)
         #time.sleep(3)
-        # img = new_lane_line.vid_pipeline(img)   
-        # cv2.imshow('a',img)
-
-        # motor.stop(t=10)
-        motor.move(speed=1,turn=0,t=2)
-        motor.move(speed=0.8,turn=0.2,t=0.2)
-        motor.move(speed=1,turn=0,t=1)
-        motor.stop(t=5)
-
-
+        img = new_lane_line.vid_pipeline(img)   
+        cv2.imshow('a',img)
+        #motor.stop(t=10)
+        #motor.move(speed=1,turn=0,t=2)
+        #motor.stop(t=1)
+        #motor.move(speed=1,turn=0.2,t=0.22)
+        #motor.stop(t=1)
+        #motor.move(speed=1,turn=0,t=1)
+        #motor.stop(t=1)
+        #motor.move(speed=1,turn=0.2,t=0.3)
+        #motor.stop(t=1)
+        #motor.move(speed=1,turn=0,t=0.3)
+        #motor.stop()
+        out.write(frame)
         if cv2.waitKey(1) & 0xFF == 27:
             print('\n\nThe End')
             cv2.destroyAllWindows()
-     
             break 
 
 

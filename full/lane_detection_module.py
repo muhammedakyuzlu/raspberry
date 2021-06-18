@@ -6,7 +6,7 @@ import time
 curveList = []
 avgVal=10
  
-def getLaneCurve(img,display=0):
+def getLaneCurve(img,display=2):
  
     imgCopy = img.copy()
     imgResult = img.copy()
@@ -78,5 +78,5 @@ if __name__ == '__main__':
         _, img = cap.read()
         img = cv2.resize(img,(480,240))
         curve = getLaneCurve(img,display=2)
-        print(curve)
+        print("curve: ",curve)
         cv2.waitKey(1)

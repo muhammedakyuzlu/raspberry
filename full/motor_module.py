@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import cv2
  
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -55,10 +56,10 @@ class Motors():
         self.TRMotor = Motor(TREna,TRIn1,TRIn2)
         self.BLMotor = Motor(BLEna,BLIn1,BLIn2)
         self.BRMotor = Motor(BREna,BRIn1,BRIn2)
+
         
         
     def move(self,speed=0.5,turn=0,t=0):
-
         if   speed > 1  : speed = 1
         elif speed < -1 : speed = -1
         speed *=100
@@ -101,25 +102,31 @@ class Motors():
         #         self.BRMotor.moveF(abs(int(speed)))
         
         # forward
-        if speed > 0 :
+        # if speed > 0 :
 
-            if  turn<0 :
-                self.TLMotor.moveF(speed)
-                self.BLMotor.moveF(speed)
-                self.TRMotor.moveB(speed)
-                self.BRMotor.moveB(speed)
+        if  turn<0 :
+            self.TLMotor.moveF(speed)
+            self.BLMotor.moveF(speed)
+            self.TRMotor.moveB(speed)
+            self.BRMotor.moveB(speed)
 
-            elif turn > 0 :
-                self.TLMotor.moveB(speed)
-                self.BLMotor.moveB(speed)
-                self.TRMotor.moveF(speed)
-                self.BRMotor.moveF(speed)
-        sleep(t)        
-        self.TLMotor.moveF(speed)
-        self.BLMotor.moveF(speed)
-        self.TRMotor.moveF(speed)
-        self.BRMotor.moveF(speed)
-        sleep(0.01)
+        elif turn > 0 :
+            self.TLMotor.moveB(speed)
+            self.BLMotor.moveB(speed)
+            self.TRMotor.moveF(speed)
+            self.BRMotor.moveF(speed)
+        else:
+            self.TLMotor.moveF(speed)
+            self.BLMotor.moveF(speed)
+            self.TRMotor.moveF(speed)
+            self.BRMotor.moveF(speed)
+        sleep(t)
+      
+        # self.TLMotor.moveF(speed)
+        # self.BLMotor.moveF(speed)
+        # self.TRMotor.moveF(speed)
+        # self.BRMotor.moveF(speed)
+        # sleep(0.01)
 
         # if speed < 0 :
         #     if  leftMotorsSpeed > rightMotorsSpeed :
@@ -198,3 +205,15 @@ class Motors():
         sleep(t)   
     def clean(self):
         GPIO.cleanup()    
+
+if __name__ == '__main__':
+    
+    motor = Motors(22,17,27,5,6,12,26,13,19,16,20,21)
+    # motor.stop(t=5)
+    motor.move(speed=1,turn=0,t=2.1 )
+    motor.stop(t=1)
+    motor.move(speed=1,turn=0.2,t=0.3)
+    motor.stop(t=1)
+    motor.move(speed=1,turn=0,t=1.5)
+    motor.stop()
+    motor.clean()
